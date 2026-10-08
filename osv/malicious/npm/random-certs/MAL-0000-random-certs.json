@@ -1,15 +1,12 @@
 {
   "schema_version": "1.7.4",
-  "modified": "2026-10-07T12:00:00Z",
-  "details": "random-certs@0.0.1 was published to npm on 2026-10-07 04:22 UTC by user weindeste. It presents itself as a generator of random self-signed certificates, but sample/cert.pem holds base64-encoded JavaScript between the PEM markers instead of a certificate. index.js (lines 41-52) reads that file, strips the PEM header, footer and whitespace, decodes it and passes it to eval; the exported generateCertificates calls this loader first (line 240). The decoded code downloads a file from a Google Drive link and writes it to the standard input of a detached, hidden python/python3 process whose output is discarded, so the package runs remote code that it does not ship.\n\nTrigger: on use (generateCertificates). Type: dropper hidden in a fake certificate file.\n\nDetected by an LLM-judged static-analysis pipeline on 2026-10-07 10:26 UTC and verified manually from the package source. Not listed in OSV or the GitHub Advisory Database at the time of this report.",
+  "modified": "2026-10-08T06:00:00Z",
+  "details": "random-certs@0.0.1 was published to npm on 2026-10-07 04:22 UTC by user weindeste. It presents itself as a generator of random self-signed certificates, but sample/cert.pem holds base64-encoded JavaScript between the PEM markers instead of a certificate. index.js (lines 41-52) reads that file, strips the PEM header, footer and whitespace, decodes it and passes it to eval; the exported generateCertificates calls this loader first (line 240). The decoded code downloads a file from a Google Drive link and writes it to the standard input of a detached, hidden python/python3 process whose output is discarded, so the package runs remote code that it does not ship.\n\nTrigger: on use (generateCertificates). Type: dropper hidden in a fake certificate file.",
   "affected": [
     {
       "package": { "ecosystem": "npm", "name": "random-certs" },
       "versions": [ "0.0.1" ]
     }
-  ],
-  "references": [
-    { "type": "PACKAGE", "url": "https://www.npmjs.com/package/random-certs/v/0.0.1" }
   ],
   "credits": [
     { "name": "Eunsoo Kim", "type": "FINDER", "contact": [ "https://github.com/eskim86" ] }
@@ -21,20 +18,19 @@
         {
           "paths": [ "sample/cert.pem" ],
           "note": "base64 JavaScript disguised as a certificate; decoded and passed to eval by index.js",
-          "source": "random-certs-0.0.1.tgz",
+          "source": "PACKAGE_ARCHIVE",
           "digests": { "sha256": "960a19cd1e2186e5040364e296a67598a4e981c56f3b818489361e1f693e0148" }
         },
         {
           "paths": [ "index.js" ],
           "note": "loader: reads sample/cert.pem, strips PEM markers, base64-decodes and evals it",
-          "source": "random-certs-0.0.1.tgz",
+          "source": "PACKAGE_ARCHIVE",
           "digests": { "sha256": "10f00844316739fca8759213ff5bf0638c146a59db646bb858658acf1230b1ee" }
         },
         {
-          "paths": [ "random-certs-0.0.1.tgz" ],
-          "note": "npm tarball",
-          "source": "https://registry.npmjs.org/random-certs/-/random-certs-0.0.1.tgz",
-          "digests": { "sha1": "46ed0dbf1b4e06d6584d7dc36515f5e1b6316a52" }
+          "note": "JavaScript decoded from sample/cert.pem and run by eval; downloads the Google Drive file and pipes it into a hidden python process",
+          "source": "IN_MEMORY",
+          "digests": { "sha256": "99e419c04df6bd8c9078508097186aad57d36a9843caffb72e2ca2885247b0ca" }
         }
       ]
     }
