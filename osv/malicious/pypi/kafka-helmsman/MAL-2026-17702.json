@@ -2,9 +2,9 @@
   "schema_version": "1.7.4",
   "id": "MAL-2026-17702",
   "published": "2026-10-08T21:15:56Z",
-  "modified": "2026-10-08T21:44:51.039762864Z",
+  "modified": "2026-10-08T22:20:48.299067026Z",
   "summary": "Malicious code in kafka-helmsman (PyPI)",
-  "details": "\n---\n_-= Per source details. Do not edit below this line.=-_\n\n## Source: amazon-inspector (d2d1d7c99040594bd5c9bb0f23a58703e1fa5f1cd15cafbe2abb3e04aa3667be)\nsetup.py starts a background thread at module scope before setuptools.setup() that collects the installer's hostname, current working directory, platform string, timestamp, and a UUID, and transmits them via HTTPS POST to https://webhook.site/bf5cb178-e0cf-43b6-8b1e-fb5d2f6ea9c9, HTTPS GET to the Interactsh out-of-band collector db406bsjk35u3jr3048079ybbkxwj7e9f.oast.site, and DNS lookups to the same OAST host. The behavior fires unconditionally on pip build/install. The package ships no functional code (packages=[], py_modules=[]) and claims the name 'kafka-helmsman' at version 99.0.3 — a shape consistent with dependency-confusion resolution against an unpublished internal name referencing github.com/teslamotors/kafka-helmsman, so any internal build referencing this name will prefer this PyPI release and execute the beacon. The package self-describes as 'Bugcrowd security research', but the destinations (webhook.site and *.oast.site) are generic third-party out-of-band collectors not operated by the claimed Tesla project, and the installer did not opt in to the exfiltration.\n\n## Source: ossf-package-analysis (a2d266a2b4e9df8f2466cfb34e58fe98c636cb75d4ad1ec08cee919bd9a86588)\nThe OpenSSF Package Analysis project identified 'kafka-helmsman' @ 99.0.1 (pypi) as malicious.\n\nIt is considered malicious because:\n\n- The package communicates with a domain associated with malicious activity.\n",
+  "details": "\n---\n_-= Per source details. Do not edit below this line.=-_\n\n## Source: amazon-inspector (d2d1d7c99040594bd5c9bb0f23a58703e1fa5f1cd15cafbe2abb3e04aa3667be)\nsetup.py starts a background thread at module scope before setuptools.setup() that collects the installer's hostname, current working directory, platform string, timestamp, and a UUID, and transmits them via HTTPS POST to https://webhook.site/bf5cb178-e0cf-43b6-8b1e-fb5d2f6ea9c9, HTTPS GET to the Interactsh out-of-band collector db406bsjk35u3jr3048079ybbkxwj7e9f.oast.site, and DNS lookups to the same OAST host. The behavior fires unconditionally on pip build/install. The package ships no functional code (packages=[], py_modules=[]) and claims the name 'kafka-helmsman' at version 99.0.3 — a shape consistent with dependency-confusion resolution against an unpublished internal name referencing github.com/teslamotors/kafka-helmsman, so any internal build referencing this name will prefer this PyPI release and execute the beacon. The package self-describes as 'Bugcrowd security research', but the destinations (webhook.site and *.oast.site) are generic third-party out-of-band collectors not operated by the claimed Tesla project, and the installer did not opt in to the exfiltration.\n\n## Source: kam193 (edc880a17d2b3a9eaeadd0a074e6debc3f507d7afbd4ac8f5c4928209fadbcde)\nInstalling the package or importing the module exfiltrates basic information about the host, and the package has no other purpose.\n\n\n---\n\nCategory: PROBABLY_PENTEST - Packages looking like typical pentest packages, but also anything that looks like testing, exploring pre-prepared kits, research & co, with clearly low-harm possibilities.\n\n\nCampaign: GENERIC-standard-pypi-install-pentest\n\n\nReasons (based on the campaign):\n\n\n - The package contains code to exfiltrate basic data from the system, like IP or username. It has a limited risk.\n\n\n - The package overrides the install command in setup.py to execute malicious code during installation.\n\n## Source: ossf-package-analysis (a2d266a2b4e9df8f2466cfb34e58fe98c636cb75d4ad1ec08cee919bd9a86588)\nThe OpenSSF Package Analysis project identified 'kafka-helmsman' @ 99.0.1 (pypi) as malicious.\n\nIt is considered malicious because:\n\n- The package communicates with a domain associated with malicious activity.\n",
   "affected": [
     {
       "package": {
@@ -14,7 +14,10 @@
       "versions": [
         "99.0.1",
         "99.0.2",
-        "99.0.3"
+        "99.0.3",
+        "99.0.4",
+        "99.0.5",
+        "99.0.6"
       ],
       "database_specific": {
         "cwes": [
@@ -68,6 +71,10 @@
     {
       "type": "PACKAGE",
       "url": "https://pypi.org/project/kafka-helmsman/99.0.3/"
+    },
+    {
+      "type": "WEB",
+      "url": "https://bad-packages.kam193.eu/pypi/package/kafka-helmsman"
     }
   ],
   "database_specific": {
@@ -110,6 +117,21 @@
         "versions": [
           "99.0.3"
         ]
+      },
+      {
+        "id": "pypi/GENERIC-standard-pypi-install-pentest/kafka-helmsman",
+        "import_time": "2026-10-08T22:18:58.155762443Z",
+        "modified_time": "2026-10-08T21:36:02.265925Z",
+        "sha256": "edc880a17d2b3a9eaeadd0a074e6debc3f507d7afbd4ac8f5c4928209fadbcde",
+        "source": "kam193",
+        "versions": [
+          "99.0.1",
+          "99.0.2",
+          "99.0.3",
+          "99.0.4",
+          "99.0.5",
+          "99.0.6"
+        ]
       }
     ]
   },
@@ -120,6 +142,14 @@
         "inspector-research@amazon.com"
       ],
       "type": "FINDER"
+    },
+    {
+      "name": "Kamil Mańkowski (kam193)",
+      "contact": [
+        "https://github.com/kam193",
+        "https://bad-packages.kam193.eu/"
+      ],
+      "type": "REPORTER"
     },
     {
       "name": "OpenSSF: Package Analysis",

@@ -2,9 +2,9 @@
   "schema_version": "1.7.4",
   "id": "MAL-2026-17703",
   "published": "2026-10-08T20:52:03Z",
-  "modified": "2026-10-08T21:44:51.137342727Z",
+  "modified": "2026-10-08T22:20:48.351143870Z",
   "summary": "Malicious code in kafka-roller (PyPI)",
-  "details": "\n---\n_-= Per source details. Do not edit below this line.=-_\n\n## Source: amazon-inspector (1ef3d9dc9185cea1ba30aafd4daa80e2a5b1a5dcf1bc59a4a5a5fbae9a480b17)\nsetup.py starts a background thread at module load (fires on `pip install` and sdist build) that collects host identifiers — hostname, current working directory, platform, timestamp, and a generated uuid — and transmits them to the hardcoded subdomain `db3va6lrl89cd975pn4078o6efah78yct.oast.live`, both over HTTPS and via DNS lookups spawned through `nslookup`, `getent hosts`, and `dig +short` against a dynamically-constructed hostname under the same OAST domain. The DNS path provides a side-channel that bypasses HTTP egress filtering. Package metadata labels the project `kafka_roller`, pins version `99.0.0`, and points `url` at `github.com/teslamotors/kafka-helmsman` with a description reserving the name for Tesla — the dependency-confusion shape designed to win resolution over an internal package of the same name on any build machine configured to resolve from public PyPI. A comment framing the beacon as security research does not change the behavior: installer host identifiers leave to an attacker-controlled collector on every install of this public name, not only on the claimed target's infrastructure.\n\n## Source: ossf-package-analysis (4b68fa52500e16cab90e8038ae96e2ba1be6c448a8caa40ab3e46dc6d3c26436)\nThe OpenSSF Package Analysis project identified 'kafka-roller' @ 99.0.0 (pypi) as malicious.\n\nIt is considered malicious because:\n\n- The package communicates with a domain associated with malicious activity.\n",
+  "details": "\n---\n_-= Per source details. Do not edit below this line.=-_\n\n## Source: amazon-inspector (1ef3d9dc9185cea1ba30aafd4daa80e2a5b1a5dcf1bc59a4a5a5fbae9a480b17)\nsetup.py starts a background thread at module load (fires on `pip install` and sdist build) that collects host identifiers — hostname, current working directory, platform, timestamp, and a generated uuid — and transmits them to the hardcoded subdomain `db3va6lrl89cd975pn4078o6efah78yct.oast.live`, both over HTTPS and via DNS lookups spawned through `nslookup`, `getent hosts`, and `dig +short` against a dynamically-constructed hostname under the same OAST domain. The DNS path provides a side-channel that bypasses HTTP egress filtering. Package metadata labels the project `kafka_roller`, pins version `99.0.0`, and points `url` at `github.com/teslamotors/kafka-helmsman` with a description reserving the name for Tesla — the dependency-confusion shape designed to win resolution over an internal package of the same name on any build machine configured to resolve from public PyPI. A comment framing the beacon as security research does not change the behavior: installer host identifiers leave to an attacker-controlled collector on every install of this public name, not only on the claimed target's infrastructure.\n\n## Source: kam193 (ddfe2b638b0889fe0ad773e6d97df2a3649cd830ca5e2ae851a2227ede687b1a)\nInstalling the package or importing the module exfiltrates basic information about the host, and the package has no other purpose.\n\n\n---\n\nCategory: PROBABLY_PENTEST - Packages looking like typical pentest packages, but also anything that looks like testing, exploring pre-prepared kits, research & co, with clearly low-harm possibilities.\n\n\nCampaign: GENERIC-standard-pypi-install-pentest\n\n\nReasons (based on the campaign):\n\n\n - The package contains code to exfiltrate basic data from the system, like IP or username. It has a limited risk.\n\n\n - The package overrides the install command in setup.py to execute malicious code during installation.\n\n## Source: ossf-package-analysis (4b68fa52500e16cab90e8038ae96e2ba1be6c448a8caa40ab3e46dc6d3c26436)\nThe OpenSSF Package Analysis project identified 'kafka-roller' @ 99.0.0 (pypi) as malicious.\n\nIt is considered malicious because:\n\n- The package communicates with a domain associated with malicious activity.\n",
   "affected": [
     {
       "package": {
@@ -16,7 +16,9 @@
         "99.0.1",
         "99.0.2",
         "99.0.3",
-        "99.0.4"
+        "99.0.4",
+        "99.0.5",
+        "99.0.6"
       ],
       "database_specific": {
         "cwes": [
@@ -79,6 +81,10 @@
     {
       "type": "PACKAGE",
       "url": "https://pypi.org/project/kafka-roller/99.0.0/"
+    },
+    {
+      "type": "WEB",
+      "url": "https://bad-packages.kam193.eu/pypi/package/kafka-roller"
     }
   ],
   "database_specific": {
@@ -167,6 +173,22 @@
         "versions": [
           "99.0.0"
         ]
+      },
+      {
+        "id": "pypi/GENERIC-standard-pypi-install-pentest/kafka-roller",
+        "import_time": "2026-10-08T22:18:58.158051275Z",
+        "modified_time": "2026-10-08T21:38:27.976677Z",
+        "sha256": "ddfe2b638b0889fe0ad773e6d97df2a3649cd830ca5e2ae851a2227ede687b1a",
+        "source": "kam193",
+        "versions": [
+          "99.0.0",
+          "99.0.1",
+          "99.0.2",
+          "99.0.3",
+          "99.0.4",
+          "99.0.5",
+          "99.0.6"
+        ]
       }
     ]
   },
@@ -177,6 +199,14 @@
         "inspector-research@amazon.com"
       ],
       "type": "FINDER"
+    },
+    {
+      "name": "Kamil Mańkowski (kam193)",
+      "contact": [
+        "https://github.com/kam193",
+        "https://bad-packages.kam193.eu/"
+      ],
+      "type": "REPORTER"
     },
     {
       "name": "OpenSSF: Package Analysis",
